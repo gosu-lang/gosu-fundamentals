@@ -1,0 +1,18 @@
+plugins {
+    id 'org.gosu-lang.gosu' version '0.2.2'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.gosu-lang.gosu:gosu-core-api:1.13.11'
+    testCompile 'junit:junit:4.12'
+}
+
+test {
+  // show standard out and standard error of the test JVM(s) on the console
+  testLogging.showStandardStreams = true
+}
