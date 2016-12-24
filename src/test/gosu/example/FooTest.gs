@@ -1,5 +1,6 @@
 package example
 
+uses example.Foo
 uses org.junit.Assert
 uses org.junit.Test
 
