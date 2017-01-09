@@ -4,8 +4,8 @@ package list
  * Linked List implementation of List interface.
  * Created by barelampagos on 12/24/16.
  */
-class LinkedList implements List {
-  var _head : ListNode
+class LinkedList<T> implements List<T> {
+  var _head : ListNode<T>
   var _size : int
 
   construct() {
@@ -14,12 +14,12 @@ class LinkedList implements List {
   }
 
   /* add() - Appends specified element to the end/specified index of the list */
-  function add(data : Object) : boolean {
+  function add(data : T) : boolean {
     if (data == null) {
       return false
     } else {
       print("Inserting " + data + ".")
-      var newNode = new ListNode(data)
+      var newNode = new ListNode<T>(data)
 
       if (_head == null) {
         _head = newNode
@@ -37,14 +37,14 @@ class LinkedList implements List {
     }
   }
 
-  function add(index : int, data : Object) : boolean {
+  function add(index : int, data : T) : boolean {
     // Check if given invalid data or index is not within list bounds
     if (data == null || (index > _size || index < 0)) {
       return false
     } else {
       // Check size of list to see if you can properly insert at specific index
         print("Inserting " + data + " at index " + index + ".")
-        var newNode = new ListNode(data)
+        var newNode = new ListNode<T>(data)
 
         if (_head == null) {
           _head = newNode
@@ -80,12 +80,12 @@ class LinkedList implements List {
   }
 
   /* contains() - Returns true if list contains the specified element */
-  function contains(data : Object) : boolean {
+  function contains(data : T) : boolean {
     var curr = _head
     print ("Checking if list contains " + data)
 
     while (curr != null) {
-      if (curr.Data == data) {
+      if (curr.Data.equals(data)) {
         return true
       }
       curr = curr.Next
@@ -96,7 +96,7 @@ class LinkedList implements List {
   }
 
   /* get() - Returns the object at the specified index */
-  function get(index : int) : Object {
+  function get(index : int) : T {
     print ("Getting element at index " + index)
     if (index >= _size || index < 0) {
       // Invalid index
@@ -115,14 +115,14 @@ class LinkedList implements List {
   }
 
   /* indexOf() - Returns the index of the first occurrence of the specified element, or -1 if it does not exist */
-  function indexOf(data : Object) : int {
+  function indexOf(data : T) : int {
     var curr = _head
     var currIndex = 0
     var resultIndex = -1
     print ("Obtaining index of " + data)
 
     while (curr != null) {
-      if (curr.Data == data) {
+      if (curr.Data.equals(data)) {
         resultIndex = currIndex
       }
       curr = curr.Next
@@ -140,12 +140,12 @@ class LinkedList implements List {
   }
 
   /* remove() - Removes first occurrence of element if it is present */
-  function remove(data : Object) {
+  function remove(data : T) {
     print ("Removing from list: " + data)
 
     if (this.contains(data)) {
 
-      if (_head.Data == data) {
+      if (_head.Data.equals(data)) {
         _head = _head.Next
         _size--
         return
@@ -154,7 +154,7 @@ class LinkedList implements List {
       var curr = _head
       var prev: ListNode = null
 
-      while (curr.Data != data) {
+      while (!curr.Data.equals(data)) {
         prev = curr
         curr = curr.Next
       }

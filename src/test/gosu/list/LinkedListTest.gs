@@ -10,13 +10,13 @@ class LinkedListTest {
   @Test
   function testConstructList() {
     print("Creating a Linked List")
-    var list = new LinkedList()
+    var list = new LinkedList<String>()
     Assert.assertNotNull(list)
   }
 
   @Test
   function testIsEmpty() {
-    var list = new LinkedList()
+    var list = new LinkedList<String>()
     Assert.assertTrue(list.isEmpty())
 
     list.add("Some Data")
@@ -26,7 +26,7 @@ class LinkedListTest {
 
   @Test
   function testAddAndGet() {
-    var list = new LinkedList()
+    var list = new LinkedList<Integer>()
 
     for (i in 0..4) {
       list.add(i)
@@ -41,7 +41,7 @@ class LinkedListTest {
 
   @Test
   function testClear() {
-    var list = new LinkedList()
+    var list = new LinkedList<Integer>()
 
     for (i in 0..4) {
       list.add(i)
@@ -55,7 +55,7 @@ class LinkedListTest {
 
   @Test
   function testIndexOf() {
-    var list = new LinkedList()
+    var list = new LinkedList<Integer>()
 
     for (i in 0..4) {
       list.add(i)
@@ -68,7 +68,7 @@ class LinkedListTest {
 
   @Test
   function testRemove() {
-    var list = new LinkedList()
+    var list = new LinkedList<Integer>()
 
     for (i in 0..4) {
       list.add(i)
@@ -86,7 +86,7 @@ class LinkedListTest {
 
   @Test
   function testAddAtIndex() {
-    var list = new LinkedList()
+    var list = new LinkedList<Integer>()
 
     Assert.assertTrue(list.add(0, 2))
     Assert.assertTrue(list.add(1, 4))
@@ -103,7 +103,5 @@ class LinkedListTest {
     Assert.assertEquals(3, list.indexOf(4))
     Assert.assertEquals(4, list.indexOf(5))
   }
-
-  // TODO: More tests
 
 }
