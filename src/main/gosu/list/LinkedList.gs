@@ -15,31 +15,27 @@ class LinkedList<T> implements List<T> {
 
   /* add() - Appends specified element to the end/specified index of the list */
   function add(data : T) : boolean {
-    if (data == null) {
-      return false
+    print("Inserting " + data + ".")
+    var newNode = new ListNode<T>(data)
+
+    if (_head == null) {
+      _head = newNode
     } else {
-      print("Inserting " + data + ".")
-      var newNode = new ListNode<T>(data)
+      var curr = _head
 
-      if (_head == null) {
-        _head = newNode
-      } else {
-        var curr = _head
-
-        while (curr.Next != null) {
-          curr = curr.Next
-        }
-
-        curr.Next = newNode
+      while (curr.Next != null) {
+        curr = curr.Next
       }
-      _size++
-      return true
+
+      curr.Next = newNode
     }
+    _size++
+    return true
   }
 
   function add(index : int, data : T) : boolean {
-    // Check if given invalid data or index is not within list bounds
-    if (data == null || (index > _size || index < 0)) {
+    // Check if index is not within list bounds
+    if (index > _size || index < 0) {
       return false
     } else {
       // Check size of list to see if you can properly insert at specific index
@@ -85,7 +81,7 @@ class LinkedList<T> implements List<T> {
     print ("Checking if list contains " + data)
 
     while (curr != null) {
-      if (curr.Data.equals(data)) {
+      if (curr.Data == data) {
         return true
       }
       curr = curr.Next
@@ -122,7 +118,7 @@ class LinkedList<T> implements List<T> {
     print ("Obtaining index of " + data)
 
     while (curr != null) {
-      if (curr.Data.equals(data)) {
+      if (curr.Data == data) {
         resultIndex = currIndex
       }
       curr = curr.Next
@@ -145,7 +141,7 @@ class LinkedList<T> implements List<T> {
 
     if (this.contains(data)) {
 
-      if (_head.Data.equals(data)) {
+      if (_head.Data == data) {
         _head = _head.Next
         _size--
         return
@@ -154,7 +150,7 @@ class LinkedList<T> implements List<T> {
       var curr = _head
       var prev: ListNode = null
 
-      while (!curr.Data.equals(data)) {
+      while (curr.Data != data) {
         prev = curr
         curr = curr.Next
       }
@@ -189,5 +185,24 @@ class LinkedList<T> implements List<T> {
     }
 
     print (outputString)
+  }
+
+  /* toString() - Returns a string of the current list in the format: [X,Y,Z] */
+  function toString() : String {
+    var curr = _head
+    var outputString = "["
+
+    while (curr != null) {
+      if (curr.Next != null)
+        outputString += curr.Data + ","
+      else
+        outputString += curr.Data
+
+      curr = curr.Next
+    }
+
+    outputString += "]"
+    print(outputString)
+    return outputString
   }
 }

@@ -104,4 +104,37 @@ class LinkedListTest {
     Assert.assertEquals(4, list.indexOf(5))
   }
 
+  @Test
+  function testAddNullValue() {
+    var list = new LinkedList<String>()
+
+    list.add("First Element")
+    list.add(null);
+    list.add("Third Element")
+
+    Assert.assertTrue(list.contains(null))
+    Assert.assertNull(list.get(list.indexOf(null)))
+  }
+
+  @Test
+  function testToString() {
+    var stringList = new LinkedList<String>()
+    stringList.add("A")
+    stringList.add("B")
+    stringList.add("C")
+
+    Assert.assertEquals("[A,B,C]", stringList.toString())
+
+    var intList = new LinkedList<Integer>()
+    intList.add(1)
+    intList.add(2)
+    intList.add(3)
+
+    Assert.assertEquals("[1,2,3]", intList.toString())
+
+    var emptyList = new LinkedList<String>()
+
+    Assert.assertEquals("[]", emptyList.toString())
+  }
+
 }
