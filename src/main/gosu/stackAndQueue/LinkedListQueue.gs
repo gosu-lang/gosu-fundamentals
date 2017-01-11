@@ -4,9 +4,9 @@ package stackAndQueue
  * Linked List implementation of the Queue interface.
  * Created by barelampagos on 12/15/16.
  */
-class LinkedListQueue implements Queue {
-  var _head : ListNode
-  var _tail : ListNode
+class LinkedListQueue<T> implements Queue<T> {
+  var _head : ListNode<T>
+  var _tail : ListNode<T>
   var _size : int
 
   construct() {
@@ -21,7 +21,7 @@ class LinkedListQueue implements Queue {
   }
 
   /* peek() - Returns the value at the front of the queue without removing it */
-  function peek() : Object {
+  function peek() : T {
     if (_head != null) {
       return _head.Data
     }
@@ -29,7 +29,7 @@ class LinkedListQueue implements Queue {
   }
 
   /* remove() - Removes the object at the front of the queue, returns that value */
-  function remove() : Object {
+  function remove() : T {
     var node = _head
 //    print ("Removing")
 
@@ -48,7 +48,7 @@ class LinkedListQueue implements Queue {
   }
 
   /* add(data : Object) - Adds a new Object to the end of the queue */
-  function add(data : Object) : boolean {
+  function add(data : T) : boolean {
 
     if (data == null) {
       return false

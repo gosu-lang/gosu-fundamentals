@@ -1,5 +1,4 @@
 package stackAndQueue
-
 uses org.junit.Assert
 uses org.junit.Test
 
@@ -7,16 +6,17 @@ uses org.junit.Test
  * Created by barelampagos on 12/22/16.
  */
 class QueueTest {
+
   @Test
-  function test_constructQueue() {
+  function testConstructQueue() {
     print("Creating a Queue")
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<String>()
     Assert.assertNotNull(queue)
   }
 
   @Test
   function testIsEmpty() {
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<Integer>()
     Assert.assertTrue(queue.isEmpty())
 
     queue.add(1)
@@ -28,7 +28,7 @@ class QueueTest {
 
   @Test
   function testQueue() {
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<Integer>()
 
     queue.add(1)
     queue.add(2)
@@ -41,7 +41,7 @@ class QueueTest {
 
   @Test
   function testPeek() {
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<Integer>()
     queue.add(1)
     queue.add(2)
     queue.add(3)
@@ -55,7 +55,7 @@ class QueueTest {
 
   @Test
   function testSize() {
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<Integer>()
     queue.add(1)
     queue.add(0)
     queue.add(1)
@@ -72,19 +72,19 @@ class QueueTest {
 
   @Test
   function testPopQueueEmpty() {
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<String>()
     Assert.assertNull(queue.remove())
   }
 
   @Test
   function testPeekQueueEmpty() {
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<Integer>()
     Assert.assertNull(queue.peek())
   }
 
   @Test
   function testAddNull() {
-    var queue = new LinkedListQueue()
+    var queue = new LinkedListQueue<Integer>()
     Assert.assertFalse(queue.add(null))
   }
 

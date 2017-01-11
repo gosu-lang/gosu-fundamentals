@@ -11,14 +11,14 @@ class StackTest {
   @Test
   function testConstructStack() {
     print("Creating a Stack")
-    var stack = new LinkedListStack()
+    var stack = new LinkedListStack<String>()
     Assert.assertNotNull(stack)
   }
 
   @Test
   function testIsEmpty() {
     print("Creating a Stack")
-    var stack = new LinkedListStack()
+    var stack = new LinkedListStack<Integer>()
     Assert.assertTrue(stack.isEmpty())
 
     stack.push(1)
@@ -30,7 +30,7 @@ class StackTest {
 
   @Test
   function testStack() {
-    var stack = new LinkedListStack()
+    var stack = new LinkedListStack<Integer>()
 
     stack.push(1)
     stack.push(2)
@@ -43,7 +43,7 @@ class StackTest {
 
   @Test
   function testPeek() {
-    var stack = new LinkedListStack()
+    var stack = new LinkedListStack<Integer>()
     stack.push(1)
     stack.push(2)
     stack.push(3)
@@ -57,7 +57,7 @@ class StackTest {
 
   @Test
   function testSize() {
-    var stack = new LinkedListStack()
+    var stack = new LinkedListStack<Integer>()
     stack.push(1)
     stack.push(0)
     stack.push(1)
@@ -67,22 +67,20 @@ class StackTest {
 
   @Test
   function testPopStackEmpty() {
-    var stack = new LinkedListStack()
-
+    var stack = new LinkedListStack<String>()
     Assert.assertNull(stack.pop())
   }
 
   @Test
   function testPeekStackEmpty() {
-    var stack = new LinkedListStack()
-
+    var stack = new LinkedListStack<Integer>()
     Assert.assertNull(stack.peek())
   }
 
   @Test
   function testAddNull() {
-    var queue = new LinkedListQueue()
-    Assert.assertFalse(queue.add(null))
+    var stack = new LinkedListStack<Integer>()
+    Assert.assertFalse(stack.push(null))
   }
 
 }

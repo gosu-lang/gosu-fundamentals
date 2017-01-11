@@ -4,8 +4,8 @@ package stackAndQueue
  * Linked List implementation of the Stack interface.
  * Created by barelampagos on 12/15/16.
  */
-class LinkedListStack implements Stack {
-  var _head : ListNode
+class LinkedListStack<T> implements Stack<T> {
+  var _head : ListNode<T>
   var _size : int
 
   construct() {
@@ -18,7 +18,7 @@ class LinkedListStack implements Stack {
   }
 
   /* peek() - Returns the value at the top of the stack without removing it */
-  function peek() : Object {
+  function peek() : T {
     if (_head != null) {
 //      print ("Peek: " + _head.Data)
       return _head.Data
@@ -28,7 +28,7 @@ class LinkedListStack implements Stack {
   }
 
   /* pop() - Removes the object at the top of the stack, returns that value */
-  function pop() : Object {
+  function pop() : T {
     var node = _head
 //    print ("Popping")
 
@@ -44,15 +44,15 @@ class LinkedListStack implements Stack {
     return null
   }
 
-  /* push(data : Object) - Adds a new Object to the top of the stack */
-  function push(data : Object) : boolean {
+  /* push(data) - Adds a new Object to the top of the stack */
+  function push(data : T) : boolean {
     if (data == null) {
       return false
     }
 
-//    print ("Pushing " + data)
+    // print ("Pushing " + data)
 
-    var node = new ListNode(data)
+    var node = new ListNode<T>(data)
     node.Next = _head
     _head = node
     _size++
