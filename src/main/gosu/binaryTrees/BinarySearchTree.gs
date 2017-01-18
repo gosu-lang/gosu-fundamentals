@@ -5,8 +5,7 @@ package binaryTrees
  */
 class BinarySearchTree implements Tree {
   var _tree : TreeNode
-  var _outputList : ArrayList<Integer>
-
+  var _outputList : ArrayList<Integer>  // Helper for tree traversal output
 
   construct() {
     _tree = null
@@ -37,12 +36,45 @@ class BinarySearchTree implements Tree {
 
   /* remove() - Removes an element from the tree */
   function remove(data : int) {
-    remove(_tree, data)
+     _tree = remove(_tree, data)
   }
 
-  function remove(tree : TreeNode, data : int) {
-    // TODO: Implementation
+  /* remove() - Recursive helper function for node removal */
+  function remove(tree : TreeNode, data : int) : TreeNode {
+    // Navigate to the node to be removed
+    if (tree.Data < data) {
+      tree.Right = remove(tree.Right, data)
+    } else if (tree.Data > data) {
+      tree.Left = remove(tree.Left, data)
+    } else {
 
+      if (tree.Left == null && tree.Right == null) {
+        // No Children --> Replace with null
+        tree = null
+      } else if (tree.Right == null) {
+        // No right child --> replace with left child
+        tree = tree.Left
+      } else if (tree.Left == null) {
+        // No left child --> replace with right child
+        tree = tree.Right
+      } else {
+        // Both children present --> replace with minimum of right tree
+        var min = getMin(tree.Right)
+        tree.Right = remove(tree.Right, min)
+        tree.Data = min
+      }
+    }
+
+    return tree
+  }
+
+  /* getMin() - Finds and returns the minimum value in the tree */
+  function getMin(tree : TreeNode) : int {
+    if (tree.Left == null) {
+      return tree.Data
+    } else {
+      return getMin(tree.Left)
+    }
   }
 
   /* find() - Returns whether or not the tree contains the specified element */
@@ -113,6 +145,8 @@ class BinarySearchTree implements Tree {
     }
   }
 
+  /* toString() - Returns a string of an inOrder traversal of the tree */
+  @Override
   function toString() : String {
     return inOrder()
   }
