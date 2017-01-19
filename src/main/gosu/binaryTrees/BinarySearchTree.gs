@@ -1,7 +1,9 @@
 package binaryTrees
 
 /**
+ * Binary Search Tree implementation of Tree interface.
  * Created by barelampagos on 1/4/17.
+ * TODO: Convert to generic
  */
 class BinarySearchTree implements Tree {
   var _tree : TreeNode
