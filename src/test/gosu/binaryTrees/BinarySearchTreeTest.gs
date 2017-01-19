@@ -12,9 +12,11 @@ class BinarySearchTreeTest {
   @Test
   function testCreateTree() {
     print("Creating a Tree")
-    var tree = new BinarySearchTree()
+    var tree = new BinarySearchTree<String>()
     Assert.assertNotNull(tree)
   }
+
+  /* BinarySearchTree<Integer> Tests */
 
   /* The following tests use this tree:
                    20
@@ -25,8 +27,8 @@ class BinarySearchTreeTest {
    */
 
   @Test
-  function testAddToTree() {
-    var tree = new BinarySearchTree()
+  function testAddToTreeInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(20)
     tree.add(5)
     tree.add(35)
@@ -37,8 +39,8 @@ class BinarySearchTreeTest {
   }
 
   @Test
-  function testInOrder() {
-    var tree = new BinarySearchTree()
+  function testInOrderInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(20)
     tree.add(5)
     tree.add(35)
@@ -49,8 +51,8 @@ class BinarySearchTreeTest {
   }
 
   @Test
-  function testPreOrder() {
-    var tree = new BinarySearchTree()
+  function testPreOrderInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(20)
     tree.add(5)
     tree.add(35)
@@ -61,8 +63,8 @@ class BinarySearchTreeTest {
   }
 
   @Test
-  function testPostOrder() {
-    var tree = new BinarySearchTree()
+  function testPostOrderInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(20)
     tree.add(5)
     tree.add(35)
@@ -73,8 +75,8 @@ class BinarySearchTreeTest {
   }
 
   @Test
-  function testFind() {
-    var tree = new BinarySearchTree()
+  function testFindInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(20)
     tree.add(5)
     tree.add(35)
@@ -96,8 +98,8 @@ class BinarySearchTreeTest {
    */
 
   @Test
-  function testRemoveNoChildren() {
-    var tree = new BinarySearchTree()
+  function testRemoveNoChildrenInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(5)
     tree.add(2)
     tree.add(18)
@@ -119,8 +121,8 @@ class BinarySearchTreeTest {
    */
 
   @Test
-  function testRemoveOneChild() {
-    var tree = new BinarySearchTree()
+  function testRemoveOneChildInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(5)
     tree.add(2)
     tree.add(18)
@@ -145,8 +147,8 @@ class BinarySearchTreeTest {
    */
 
   @Test
-  function testRemoveTwoChildren() {
-    var tree = new BinarySearchTree()
+  function testRemoveTwoChildrenInteger() {
+    var tree = new BinarySearchTree<Integer>()
     tree.add(5)
     tree.add(2)
     tree.add(12)
@@ -159,5 +161,152 @@ class BinarySearchTreeTest {
 
     tree.remove(12)
     Assert.assertEquals("[-4, 2, 3, 5, 9, 19, 21, 25]", tree.toString())
+  }
+
+  /* BinarySearchTree<String> Tests */
+
+  /* The following tests use this tree:
+                  dog
+                 /   \
+               bat    rat
+               / \
+             ant  cat
+   */
+
+  @Test
+  function testAddToTreeString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("dog")
+    tree.add("bat")
+    tree.add("ant")
+    tree.add("cat")
+    tree.add("rat")
+
+    Assert.assertEquals("[ant, bat, cat, dog, rat]", tree.toString())
+  }
+
+  @Test
+  function testInOrderString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("dog")
+    tree.add("bat")
+    tree.add("ant")
+    tree.add("cat")
+    tree.add("rat")
+
+    Assert.assertEquals("[ant, bat, cat, dog, rat]", tree.inOrder())
+  }
+
+  @Test
+  function testPreOrderString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("dog")
+    tree.add("bat")
+    tree.add("ant")
+    tree.add("cat")
+    tree.add("rat")
+
+    Assert.assertEquals("[dog, bat, ant, cat, rat]", tree.preOrder())
+  }
+
+  @Test
+  function testPostOrderString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("dog")
+    tree.add("bat")
+    tree.add("ant")
+    tree.add("cat")
+    tree.add("rat")
+
+    Assert.assertEquals("[ant, cat, bat, rat, dog]", tree.postOrder())
+  }
+
+  @Test
+  function testFindString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("dog")
+    tree.add("bat")
+    tree.add("ant")
+    tree.add("cat")
+    tree.add("rat")
+
+    Assert.assertTrue(tree.find("dog"))
+    Assert.assertTrue(tree.find("cat"))
+    Assert.assertFalse(tree.find("lion"))
+    Assert.assertFalse(tree.find("zebra"))
+  }
+
+  /* Uses the tree:
+             dog              dog
+           /    \             / \
+         bat    zebra -->  bat  zebra
+        /   \                 \
+      ape   cat                cat
+   */
+
+  @Test
+  function testRemoveNoChildrenString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("dog")
+    tree.add("bat")
+    tree.add("zebra")
+    tree.add("ape")
+    tree.add("cat")
+
+    tree.remove("ape")
+    Assert.assertEquals("[bat, cat, dog, zebra]", tree.toString())
+  }
+
+  /* Uses the tree:
+           dog                     dog
+           / \                   /     \
+        bat   elk        -->   bat      goat
+        / \     \              / \      /  \
+      ape  cat  goat         ape  cat  fox  zebra
+                /  \
+              fox   zebra
+   */
+
+  @Test
+  function testRemoveOneChildString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("dog")
+    tree.add("bat")
+    tree.add("elk")
+    tree.add("ape")
+    tree.add("cat")
+    tree.add("goat")
+    tree.add("fox")
+    tree.add("zebra")
+
+    tree.remove("elk")
+    Assert.assertEquals("[ape, bat, cat, dog, fox, goat, zebra]", tree.toString())
+  }
+
+  /* Uses the tree:
+            goat                         goat
+           /     \                    /        \
+        bat       owl        -->     bat         pig
+        / \     /     \             /  \       /    \
+     ape  cat  hawk   yak          ape  cat  hawk    yak
+                      /  \                             \
+                    pig   zebra                         zebra
+   */
+
+  @Test
+  function testRemoveTwoChildrenString() {
+    var tree = new BinarySearchTree<String>()
+    tree.add("goat")
+    tree.add("bat")
+    tree.add("owl")
+    tree.add("ape")
+    tree.add("cat")
+    tree.add("hawk")
+    tree.add("yak")
+    tree.add("pig")
+    tree.add("zebra")
+
+    tree.remove("owl")
+    Assert.assertEquals("[ape, bat, cat, goat, hawk, pig, yak, zebra]", tree.toString())
   }
 }

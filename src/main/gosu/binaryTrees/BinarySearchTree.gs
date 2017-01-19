@@ -1,26 +1,25 @@
 package binaryTrees
 
 /**
- * Binary Search Tree implementation of Tree interface.
+ * Binary Search Tree implementation (using Generics) of Tree interface.
  * Created by barelampagos on 1/4/17.
- * TODO: Convert to generic
  */
-class BinarySearchTree implements Tree {
-  var _tree : TreeNode
-  var _outputList : ArrayList<Integer>  // Helper for tree traversal output
+class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
+  var _tree : TreeNode<T>
+  var _outputList : ArrayList<T>  // Helper for tree traversal output
 
   construct() {
     _tree = null
   }
 
   /* add() - Adds an element to the tree */
-  function add(data : int) {
+  function add(data : T) {
     print("Adding " + data)
     _tree = add(_tree, data)
   }
 
   /* add() - Recursive function for node insertion */
-  function add(tree : TreeNode, data : int) : TreeNode {
+  function add(tree : TreeNode<T>, data : T) : TreeNode<T> {
     // Found the proper spot to insert
     if (tree == null) {
       tree = new TreeNode(data);
@@ -37,12 +36,13 @@ class BinarySearchTree implements Tree {
   }
 
   /* remove() - Removes an element from the tree */
-  function remove(data : int) {
-     _tree = remove(_tree, data)
+  function remove(data : T) {
+    print("Removing " + data)
+    _tree = remove(_tree, data)
   }
 
   /* remove() - Recursive helper function for node removal */
-  function remove(tree : TreeNode, data : int) : TreeNode {
+  function remove(tree : TreeNode<T>, data : T) : TreeNode<T> {
     // Navigate to the node to be removed
     if (tree.Data < data) {
       tree.Right = remove(tree.Right, data)
@@ -71,7 +71,7 @@ class BinarySearchTree implements Tree {
   }
 
   /* getMin() - Finds and returns the minimum value in the tree */
-  function getMin(tree : TreeNode) : int {
+  function getMin(tree : TreeNode<T>) : T {
     if (tree.Left == null) {
       return tree.Data
     } else {
@@ -80,12 +80,12 @@ class BinarySearchTree implements Tree {
   }
 
   /* find() - Returns whether or not the tree contains the specified element */
-  function find(data : int) : boolean {
+  function find(data : T) : boolean {
     return find(_tree, data)
   }
 
   /* find() - Recursive function for finding a node */
-  function find(tree : TreeNode, data : int) : boolean {
+  function find(tree : TreeNode<T>, data : T) : boolean {
     // Unable to find the data in the tree
     if (tree == null) {
       return false
@@ -104,12 +104,12 @@ class BinarySearchTree implements Tree {
 
   /* inOrder() - Returns a string of the in-order traversal of the tree */
   function inOrder() : String {
-    _outputList = new ArrayList<Integer>()
+    _outputList = new ArrayList<T>()
     inOrder(_tree)
     return _outputList.toString()
   }
 
-  function inOrder(tree : TreeNode) {
+  function inOrder(tree : TreeNode<T>) {
     if (tree != null) {
       inOrder(tree.Left)
       _outputList.add(tree.Data)
@@ -119,12 +119,12 @@ class BinarySearchTree implements Tree {
 
   /* preOrder() - Returns a string of the pre-order traversal of the tree */
   function preOrder() : String {
-    _outputList = new ArrayList<Integer>()
+    _outputList = new ArrayList<T>()
     preOrder(_tree)
     return _outputList.toString()
   }
 
-  function preOrder(tree : TreeNode) {
+  function preOrder(tree : TreeNode<T>) {
     if (tree != null) {
       _outputList.add(tree.Data)
       preOrder(tree.Left)
@@ -134,12 +134,12 @@ class BinarySearchTree implements Tree {
 
   /* postOrder() - Returns a string of the post-order traversal of the tree */
   function postOrder() : String {
-    _outputList = new ArrayList<Integer>()
+    _outputList = new ArrayList<T>()
     postOrder(_tree)
     return _outputList.toString()
   }
 
-  function postOrder(tree : TreeNode) {
+  function postOrder(tree : TreeNode<T>) {
     if (tree != null) {
       postOrder(tree.Left)
       postOrder(tree.Right)
