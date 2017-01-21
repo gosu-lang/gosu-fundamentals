@@ -1,11 +1,17 @@
-package list
+package example
+
+uses example.ListNode
+uses list.*
+
+uses java.util.*
+uses java.util.List
 
 /**
- * Linked List implementation of List interface.
+ * Linked List implementation of java.util.List interface.
  * Created by barelampagos on 12/24/16.
  */
-class LinkedList<T> implements List<T> {
-  var _head : ListNode<T>
+class LinkedList<E> implements java.util.List<E> {
+  var _head : ListNode<E>
   var _size : int
 
   construct() {
@@ -14,9 +20,9 @@ class LinkedList<T> implements List<T> {
   }
 
   /* add() - Appends specified element to the end/specified index of the list */
-  function add(data : T) : boolean {
+  function add(data : E) : boolean {
     print("Inserting " + data + ".")
-    var newNode = new ListNode<T>(data)
+    var newNode = new ListNode<E>(data)
 
     if (_head == null) {
       _head = newNode
@@ -33,7 +39,7 @@ class LinkedList<T> implements List<T> {
     return true
   }
 
-  function add(index : int, data : T) : boolean {
+  function add(index : int, data : E) {
     // Check if index is not within list bounds
     if (index > _size || index < 0) {
       return false
@@ -65,6 +71,17 @@ class LinkedList<T> implements List<T> {
     }
   }
 
+  /* Appends all of the elements in the specified collection to the end of this list,
+  in the order that they are returned by the specified collection's iterator (optional operation). */
+  function addAll(c : Collection<E>) : boolean {
+
+  }
+
+  /* Inserts all of the elements in the specified collection into this list at the specified position (optional operation). */
+  function addAll(index : int, c : Collection<E>) : boolean {
+
+  }
+
   /* clear() - Removes all elements from this list */
   function clear() {
     print ("Clearing list")
@@ -76,7 +93,7 @@ class LinkedList<T> implements List<T> {
   }
 
   /* contains() - Returns true if list contains the specified element */
-  function contains(data : T) : boolean {
+  function contains(o : Object) : boolean {
     var curr = _head
     print ("Checking if list contains " + data)
 
@@ -91,8 +108,18 @@ class LinkedList<T> implements List<T> {
     return false
   }
 
+  /* Returns true if this list contains all of the elements of the specified collection. */
+  function containsAll(c : Collection) : boolean {
+
+  }
+
+  /* Compares the specified object with this list for equality. */
+  function equals(o : Object) : boolean {
+
+  }
+
   /* get() - Returns the object at the specified index */
-  function get(index : int) : T {
+  function get(index : int) : E {
     print ("Getting element at index " + index)
     if (index >= _size || index < 0) {
       // Invalid index
@@ -110,8 +137,13 @@ class LinkedList<T> implements List<T> {
     return curr.Data
   }
 
+  /* Returns the hash code value for this list. */
+  function hashCode() : int {
+
+  }
+
   /* indexOf() - Returns the index of the first occurrence of the specified element, or -1 if it does not exist */
-  function indexOf(data : T) : int {
+  function indexOf(o : Object) : int {
     var curr = _head
     var currIndex = 0
     var resultIndex = -1
@@ -135,8 +167,33 @@ class LinkedList<T> implements List<T> {
     return (_size == 0 && _head == null)
   }
 
+  /* Returns an iterator over the elements in this list in proper sequence. */
+  function iterator() : Iterator<E> {
+
+  }
+
+  /* Returns the index of the last occurrence of the specified element in this list, or -1 if this list does not contain the element. */
+  function lastIndexOf(o : Object) : int {
+
+  }
+
+  /* Returns a list iterator over the elements in this list (in proper sequence). */
+  function listIterator() : ListIterator<E> {
+
+  }
+
+  /* Returns a list iterator over the elements in this list (in proper sequence), starting at the specified position in the list. */
+  function listIterator(index : int) : ListIterator<E> {
+
+  }
+
+  /* Removes the element at the specified position in this list (optional operation). */
+  function remove(index : int) : E {
+
+  }
+
   /* remove() - Removes first occurrence of element if it is present */
-  function remove(data : T) {
+  function remove(o : Object) : boolean {
     print ("Removing from list: " + data)
 
     if (this.contains(data)) {
@@ -160,9 +217,40 @@ class LinkedList<T> implements List<T> {
     }
   }
 
+  /* Removes from this list all of its elements that are contained in the specified collection (optional operation). */
+  function removeAll(c : Collection) : boolean {
+
+  }
+
+  /* Retains only the elements in this list that are contained in the specified collection (optional operation). */
+  function retainAll(c : Collection) : boolean {
+
+  }
+
+  /* Replaces the element at the specified position in this list with the specified element (optional operation). */
+  function set(index : int, element : E) : E {
+
+  }
+
   /* size() - Returns the size of the list */
   function size() : int {
     return _size
+  }
+
+  /* Returns a view of the portion of this list between the specified fromIndex, inclusive, and toIndex, exclusive. */
+  function subList(fromIndex : int, toIndex : int) : List<E> {
+
+  }
+
+  /* Returns an array containing all of the elements in this list in proper sequence (from first to last element). */
+  function toArray() : Object[] {
+
+  }
+
+  /* Returns an array containing all of the elements in this list in proper sequence (from first to last element);
+  the runtime type of the returned array is that of the specified array. */
+  function toArray(a : T[]) : T[] {
+
   }
 
   /* printList() - Helper function to print linked list */

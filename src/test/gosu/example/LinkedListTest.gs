@@ -1,4 +1,5 @@
-package list
+package example
+uses example.*
 uses org.junit.Assert
 uses org.junit.Test
 
