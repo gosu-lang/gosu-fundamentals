@@ -1,8 +1,5 @@
 package example
 
-uses example.ListNode
-uses list.*
-
 uses java.util.*
 uses java.util.List
 
@@ -116,6 +113,7 @@ class LinkedList<E> implements java.util.List<E> {
   /* Compares the specified object with this list for equality. */
   function equals(o : Object) : boolean {
 
+    r
   }
 
   /* get() - Returns the object at the specified index */
@@ -147,10 +145,10 @@ class LinkedList<E> implements java.util.List<E> {
     var curr = _head
     var currIndex = 0
     var resultIndex = -1
-    print ("Obtaining index of " + data)
+    print ("Obtaining index of " + o)
 
     while (curr != null) {
-      if (curr.Data == data) {
+      if (curr.Data == o) {
         resultIndex = currIndex
       }
       curr = curr.Next
@@ -162,7 +160,7 @@ class LinkedList<E> implements java.util.List<E> {
   }
 
   /* isEmpty() - Returns true if list is empty (contains no elements) */
-  function isEmpty() : boolean {
+  property get Empty() : boolean {
     print ("Checking if list is empty: " + (_size == 0 && _head == null))
     return (_size == 0 && _head == null)
   }
@@ -194,20 +192,20 @@ class LinkedList<E> implements java.util.List<E> {
 
   /* remove() - Removes first occurrence of element if it is present */
   function remove(o : Object) : boolean {
-    print ("Removing from list: " + data)
+    print ("Removing from list: " + o)
 
-    if (this.contains(data)) {
+    if (this.contains(o)) {
 
-      if (_head.Data == data) {
+      if (_head.Data == o) {
         _head = _head.Next
         _size--
-        return
+        return true
       }
 
       var curr = _head
       var prev: ListNode = null
 
-      while (curr.Data != data) {
+      while (curr.Data != o) {
         prev = curr
         curr = curr.Next
       }
@@ -215,6 +213,8 @@ class LinkedList<E> implements java.util.List<E> {
       prev.Next = curr.Next
       _size--
     }
+
+    return false
   }
 
   /* Removes from this list all of its elements that are contained in the specified collection (optional operation). */
@@ -249,7 +249,7 @@ class LinkedList<E> implements java.util.List<E> {
 
   /* Returns an array containing all of the elements in this list in proper sequence (from first to last element);
   the runtime type of the returned array is that of the specified array. */
-  function toArray(a : T[]) : T[] {
+  function toArray<T>(a : T[]) : T[] {
 
   }
 
