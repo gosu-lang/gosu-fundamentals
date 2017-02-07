@@ -16,10 +16,10 @@ class LinkedList<E> implements java.util.List<E> {
     _size = 0
   }
 
-  /* add() - Appends specified element to the end/specified index of the list */
-  function add(data : E) : boolean {
-    print("Inserting " + data + ".")
-    var newNode = new ListNode<E>(data)
+  /* Appends specified element to the end of the list */
+  function add(e : E) : boolean {
+    print("Inserting " + e + ".")
+    var newNode = new ListNode<E>(e)
 
     if (_head == null) {
       _head = newNode
@@ -36,14 +36,15 @@ class LinkedList<E> implements java.util.List<E> {
     return true
   }
 
-  function add(index : int, data : E) {
+  /* Appends specified element to the specified index in the list */
+  function add(index : int, element : E) {
     // Check if index is not within list bounds
     if (index > _size || index < 0) {
-      return false
+      return
     } else {
       // Check size of list to see if you can properly insert at specific index
-        print("Inserting " + data + " at index " + index + ".")
-        var newNode = new ListNode<T>(data)
+        print("Inserting " + element + " at index " + index + ".")
+        var newNode = new ListNode<E>(element)
 
         if (_head == null) {
           _head = newNode
@@ -64,38 +65,42 @@ class LinkedList<E> implements java.util.List<E> {
 
         _size++
         this.printList()
-        return true
     }
   }
 
   /* Appends all of the elements in the specified collection to the end of this list,
-  in the order that they are returned by the specified collection's iterator (optional operation). */
+  in the order that they are returned by the specified collection's iterator. */
   function addAll(c : Collection<E>) : boolean {
-
+    for (item in c) {
+        this.add(item)
+    }
+    return true
   }
 
   /* Inserts all of the elements in the specified collection into this list at the specified position (optional operation). */
   function addAll(index : int, c : Collection<E>) : boolean {
-
+    // TODO: Implement addAll
+    return true
   }
 
-  /* clear() - Removes all elements from this list */
+  /* Removes all elements from this list */
   function clear() {
     print ("Clearing list")
 
     if (_head != null) {
+      // Reset list head + size
       _head = null
       _size = 0
     }
   }
 
-  /* contains() - Returns true if list contains the specified element */
+  /* Returns true if list contains the specified element */
   function contains(o : Object) : boolean {
     var curr = _head
-    print ("Checking if list contains " + data)
+    print ("Checking if list contains " + o)
 
     while (curr != null) {
-      if (curr.Data == data) {
+      if (curr.Data == o) {
         return true
       }
       curr = curr.Next
@@ -107,16 +112,19 @@ class LinkedList<E> implements java.util.List<E> {
 
   /* Returns true if this list contains all of the elements of the specified collection. */
   function containsAll(c : Collection) : boolean {
+    // Check to see if all items are in the list
+    for (item in c) {
+        // Return false if we find one element not in the list
+        if (!this.contains(c)) {
+            return false
+        }
+    }
 
+    // All elements in collection are in the list
+    return true
   }
 
-  /* Compares the specified object with this list for equality. */
-  function equals(o : Object) : boolean {
-
-    r
-  }
-
-  /* get() - Returns the object at the specified index */
+  /* Returns the object at the specified index */
   function get(index : int) : E {
     print ("Getting element at index " + index)
     if (index >= _size || index < 0) {
@@ -135,13 +143,40 @@ class LinkedList<E> implements java.util.List<E> {
     return curr.Data
   }
 
-  /* Returns the hash code value for this list. */
-  function hashCode() : int {
+  /* Returns the index of the first occurrence of the specified element, or -1 if it does not exist */
+  function indexOf(o : Object) : int {
+    var curr = _head
+    var currIndex = 0
+    var resultIndex = -1
+    print ("Obtaining index of " + o)
 
+    while (curr != null) {
+      if (curr.Data == o) {
+        resultIndex = currIndex
+        break
+      }
+      curr = curr.Next
+      currIndex++
+    }
+
+    print (resultIndex)
+    return resultIndex
   }
 
-  /* indexOf() - Returns the index of the first occurrence of the specified element, or -1 if it does not exist */
-  function indexOf(o : Object) : int {
+  /* Returns true if list is empty (contains no elements) */
+  property get Empty() : boolean {
+    print ("Checking if list is empty: " + (_size == 0 && _head == null))
+    return (_size == 0 && _head == null)
+  }
+
+  /* Returns an iterator over the elements in this list in proper sequence. */
+  function iterator() : Iterator<E> {
+    // TODO: Implement iterator
+    return null
+  }
+
+  /* Returns the index of the last occurrence of the specified element in this list, or -1 if this list does not contain the element. */
+  function lastIndexOf(o : Object) : int {
     var curr = _head
     var currIndex = 0
     var resultIndex = -1
@@ -159,38 +194,48 @@ class LinkedList<E> implements java.util.List<E> {
     return resultIndex
   }
 
-  /* isEmpty() - Returns true if list is empty (contains no elements) */
-  property get Empty() : boolean {
-    print ("Checking if list is empty: " + (_size == 0 && _head == null))
-    return (_size == 0 && _head == null)
-  }
-
-  /* Returns an iterator over the elements in this list in proper sequence. */
-  function iterator() : Iterator<E> {
-
-  }
-
-  /* Returns the index of the last occurrence of the specified element in this list, or -1 if this list does not contain the element. */
-  function lastIndexOf(o : Object) : int {
-
-  }
-
   /* Returns a list iterator over the elements in this list (in proper sequence). */
   function listIterator() : ListIterator<E> {
-
+    // TODO: Implement listIterator
+    return null
   }
 
   /* Returns a list iterator over the elements in this list (in proper sequence), starting at the specified position in the list. */
   function listIterator(index : int) : ListIterator<E> {
-
+    // TODO: Implement listIterator
+    return null
   }
 
-  /* Removes the element at the specified position in this list (optional operation). */
+  /* Removes the element at the specified position in this list. */
   function remove(index : int) : E {
+    print ("Removing from index: " + index)
+
+    var currIndex = 0
+    var prev : ListNode<E> = null
+    var curr = _head
+
+    // Special case for removing first element in the list
+    if (index == 0) {
+      _head = _head.Next
+      _size--
+      return curr.Data
+    }
+
+    // Iterate to proper index
+    while (currIndex != index) {
+      prev = curr
+      curr = curr.Next
+      currIndex++
+    }
+
+    // Update list + size
+    prev.Next = curr.Next
+    _size--
+    return curr.Data
 
   }
 
-  /* remove() - Removes first occurrence of element if it is present */
+  /* Removes first occurrence of element if it is present */
   function remove(o : Object) : boolean {
     print ("Removing from list: " + o)
 
@@ -217,19 +262,48 @@ class LinkedList<E> implements java.util.List<E> {
     return false
   }
 
-  /* Removes from this list all of its elements that are contained in the specified collection (optional operation). */
+  /* Removes from this list all of its elements that are contained in the specified collection. */
   function removeAll(c : Collection) : boolean {
+    var previousSize = _size
 
+    for (item in c) {
+      this.remove(c)
+    }
+
+    // Return if the list's size has changed as a result of the operation
+    return (previousSize != _size)
   }
 
-  /* Retains only the elements in this list that are contained in the specified collection (optional operation). */
+  /* Retains only the elements in this list that are contained in the specified collection. */
   function retainAll(c : Collection) : boolean {
+    var curr = _head
+    var previousSize = _size
 
+    while (curr != null) {
+      if (c.contains(curr.Data)) {
+        this.remove(curr.Data)
+      }
+    }
+
+    return (previousSize != _size)
   }
 
-  /* Replaces the element at the specified position in this list with the specified element (optional operation). */
+  /* Replaces the element at the specified position in this list with the specified element. */
   function set(index : int, element : E) : E {
+    var currIndex = 0
+    var curr = _head
+    var result : E
 
+    // Iterate to proper index
+    while (currIndex != index) {
+      curr = curr.Next
+      currIndex++
+    }
+
+    // Store data at current position + replace with 'element'
+    result = curr.Data
+    curr.Data = element
+    return result
   }
 
   /* size() - Returns the size of the list */
@@ -239,18 +313,53 @@ class LinkedList<E> implements java.util.List<E> {
 
   /* Returns a view of the portion of this list between the specified fromIndex, inclusive, and toIndex, exclusive. */
   function subList(fromIndex : int, toIndex : int) : List<E> {
+    var result = new LinkedList<E>()
+    var curr = _head
+    var currIndex = 0
 
+    // Navigate to fromIndex
+    while (currIndex != fromIndex) {
+      curr = curr.Next
+      currIndex++
+    }
+
+    // Add all elements from fromIndex (inclusive) --> toIndex (exclusive)
+    while (currIndex < toIndex) {
+      result.add(curr.Data)
+      curr = curr.Next
+      currIndex++
+    }
+
+    return result
   }
 
   /* Returns an array containing all of the elements in this list in proper sequence (from first to last element). */
   function toArray() : Object[] {
+    var resultArray = new Object[_size]
+    var curr = _head
 
+    // Fill array with list elements
+    for (i in 0..|_size) {
+      resultArray[i] = curr.Data
+      curr = curr.Next
+    }
+
+    return resultArray
   }
 
   /* Returns an array containing all of the elements in this list in proper sequence (from first to last element);
   the runtime type of the returned array is that of the specified array. */
   function toArray<T>(a : T[]) : T[] {
+    var resultArray = new T[_size]
+    var curr = _head
 
+    // Fill array with list elements
+    for (i in 0..|_size) {
+      resultArray[i] = new T(curr.Data)
+      curr = curr.Next
+    }
+
+    return resultArray
   }
 
   /* printList() - Helper function to print linked list */
