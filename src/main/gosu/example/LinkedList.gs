@@ -77,10 +77,55 @@ class LinkedList<E> implements java.util.List<E> {
     return true
   }
 
-  /* Inserts all of the elements in the specified collection into this list at the specified position (optional operation). */
+  /* Inserts all of the elements in the specified collection into this list at the specified position. */
   function addAll(index : int, c : Collection<E>) : boolean {
-    // TODO: Implement addAll
-    return true
+    var currSize = _size
+    var currIndex = 0
+    var curr = _head
+
+    // Handle adding all to front (index == 0)
+    if (index == 0) {
+      var tempHead : ListNode<E>  // Store new head of the list
+      var tempCurr : ListNode<E>  // Store current position in new list, needed to connect new list to original
+
+      for (item in c) {
+        var newNode = new ListNode<E>(item)
+
+        if (tempHead == null) {
+          tempHead = newNode
+          tempCurr = tempHead
+        } else {
+          tempCurr.Next = newNode
+          tempCurr = newNode
+        }
+      }
+
+      // Connect the new list to original list + update new head
+      tempCurr.Next = curr
+      _head = tempHead
+    } else {
+      // Navigate to index - 1
+      while (currIndex < index) {
+        curr = curr.Next
+        currIndex++
+      }
+
+      // Store reference to second half of list
+      var next = curr.Next
+
+      /* Create a new node for each element in the collection,
+       update pointers, and iterate forward */
+      for (item in c) {
+        var newNode = new ListNode<E>(item)
+        curr.Next = newNode
+        curr = newNode
+      }
+
+      // Connect new list to remaining list elements
+      curr.Next = next
+    }
+
+    return (currSize != _size)
   }
 
   /* Removes all elements from this list */
@@ -115,7 +160,7 @@ class LinkedList<E> implements java.util.List<E> {
     // Check to see if all items are in the list
     for (item in c) {
         // Return false if we find one element not in the list
-        if (!this.contains(c)) {
+        if (!this.contains(item)) {
             return false
         }
     }
@@ -171,8 +216,8 @@ class LinkedList<E> implements java.util.List<E> {
 
   /* Returns an iterator over the elements in this list in proper sequence. */
   function iterator() : Iterator<E> {
-    // TODO: Implement iterator
-    return null
+    var linkedListIterator = new LinkedListIterator()
+    return linkedListIterator
   }
 
   /* Returns the index of the last occurrence of the specified element in this list, or -1 if this list does not contain the element. */
@@ -267,7 +312,7 @@ class LinkedList<E> implements java.util.List<E> {
     var previousSize = _size
 
     for (item in c) {
-      this.remove(c)
+      this.remove(item)
     }
 
     // Return if the list's size has changed as a result of the operation
@@ -401,5 +446,60 @@ class LinkedList<E> implements java.util.List<E> {
     outputString += "]"
     print(outputString)
     return outputString
+  }
+
+  /* Linked List Iterator */
+  class LinkedListIterator implements java.util.Iterator<E>, java.util.ListIterator<E> {
+    var _curr : ListNode<E>
+    var _previous : ListNode<E>
+
+    construct() {
+      _curr = _head
+    }
+
+    function add(e : E) {
+
+    }
+
+    function hasNext() : boolean {
+       return (_curr != null)
+    }
+
+    function hasPrevious() : boolean {
+      return (_previous != null)
+    }
+
+    function next() : E {
+      var result : E = null
+
+      if (hasNext()) {
+       result = _curr.Data
+        _previous = _curr
+       _curr = _curr.Next
+      }
+
+      return result
+    }
+
+    function nextIndex() : int {
+
+    }
+
+    function previous() : E {
+
+    }
+
+    function previousIndex() :int {
+
+    }
+
+    function remove() {
+
+    }
+
+    function set(e : E) {
+
+    }
+
   }
 }
