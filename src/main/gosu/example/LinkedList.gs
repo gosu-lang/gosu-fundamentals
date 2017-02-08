@@ -241,14 +241,22 @@ class LinkedList<E> implements java.util.List<E> {
 
   /* Returns a list iterator over the elements in this list (in proper sequence). */
   function listIterator() : ListIterator<E> {
-    // TODO: Implement listIterator
-    return null
+    var linkedListIterator = new LinkedListIterator()
+    return linkedListIterator
   }
 
   /* Returns a list iterator over the elements in this list (in proper sequence), starting at the specified position in the list. */
   function listIterator(index : int) : ListIterator<E> {
-    // TODO: Implement listIterator
-    return null
+    var start = _head
+    var currIndex = 0
+
+    while (currIndex != index) {
+      currIndex++
+      start = start.Next
+    }
+
+    var linkedListIterator = new LinkedListIterator(start, currIndex)
+    return linkedListIterator
   }
 
   /* Removes the element at the specified position in this list. */
@@ -452,23 +460,34 @@ class LinkedList<E> implements java.util.List<E> {
   class LinkedListIterator implements java.util.Iterator<E>, java.util.ListIterator<E> {
     var _curr : ListNode<E>
     var _previous : ListNode<E>
+    var currIndex : int
 
     construct() {
       _curr = _head
+      currIndex = 0
     }
 
+    construct(start : ListNode<E>, index : int) {
+      _curr = start
+      currIndex = index
+    }
+
+    /* Inserts the specified element into the list. */
     function add(e : E) {
-
+      // TODO
     }
 
+    /* Returns true if this list iterator has more elements when traversing the list in the forward direction. */
     function hasNext() : boolean {
        return (_curr != null)
     }
 
+    /* Returns true if this list iterator has more elements when traversing the list in the reverse direction. */
     function hasPrevious() : boolean {
       return (_previous != null)
     }
 
+    /* Returns the next element in the list and advances the cursor position. */
     function next() : E {
       var result : E = null
 
@@ -476,29 +495,36 @@ class LinkedList<E> implements java.util.List<E> {
        result = _curr.Data
         _previous = _curr
        _curr = _curr.Next
+        currIndex++
       }
 
       return result
     }
 
+    /* Returns the index of the element that would be returned by a subsequent call to next(). */
     function nextIndex() : int {
-
+      return currIndex
     }
 
+    /* Returns the previous element in the list and moves the cursor position backwards. */
     function previous() : E {
-
+      // TODO: Remake class to support doubly linked?
+      return null
     }
 
-    function previousIndex() :int {
-
+    /* Returns the index of the element that would be returned by a subsequent call to previous(). */
+    function previousIndex() : int {
+      return currIndex - 1
     }
 
+    /* Removes from the list the last element that was returned by next() or previous(). */
     function remove() {
-
+      // TODO
     }
 
+    /* Replaces the last element returned by next() or previous() with the specified element. */
     function set(e : E) {
-
+      // TODO
     }
 
   }
