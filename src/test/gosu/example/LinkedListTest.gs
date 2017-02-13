@@ -120,11 +120,9 @@ class LinkedListTest {
       Assert.assertEquals(i, list.indexOf(i))
     }
 
-    Assert.assertEquals(-1, "Word")
-    Assert.assertEquals(-1, 100)
+    Assert.assertEquals(-1, list.indexOf("Word"))
+    Assert.assertEquals(-1, list.indexOf(100))
   }
-
-  // TODO: Write tests for: Iterator + List iterator
 
   @Test
   function testLastIndexOf() {
