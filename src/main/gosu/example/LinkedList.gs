@@ -19,7 +19,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Appends specified element to the end of the list */
-  function add(e : E) : boolean {
+  override function add(e : E) : boolean {
     print("Inserting " + e + ".")
     var currSize = _size
     var newNode = new ListNode<E>(e)
@@ -37,7 +37,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Appends specified element to the specified index in the list */
-  function add(index : int, element : E) {
+  override function add(index : int, element : E) {
     // Check if index is within list bounds
     if (index >= 0 && index <= _size) {
       // Check size of list to see if you can properly insert at specific index
@@ -52,6 +52,8 @@ class LinkedList<E> implements List<E> {
           newNode.Next = _head
           _head.Prev = newNode
           _head = newNode
+        } else if (index == _size) {
+          this.add(element);
         } else {
           var curr = _head
           var currIndex = 0
@@ -73,15 +75,17 @@ class LinkedList<E> implements List<E> {
 
   /* Appends all of the elements in the specified collection to the end of this list,
   in the order that they are returned by the specified collection's iterator. */
-  function addAll(c : Collection<E>) : boolean {
+  override function addAll(c : Collection<E>) : boolean {
+    var currSize = _size
+
     for (item in c) {
         this.add(item)
     }
-    return true
+    return (currSize != _size)
   }
 
   /* Inserts all of the elements in the specified collection into this list at the specified position. */
-  function addAll(index : int, c : Collection<E>) : boolean {
+  override function addAll(index : int, c : Collection<E>) : boolean {
     var currSize = _size
     var currIndex = 0
     var curr = _head
@@ -138,7 +142,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Removes all elements from this list */
-  function clear() {
+  override function clear() {
     print ("Clearing list")
 
     if (_head != null && _tail != null) {
@@ -150,7 +154,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Returns true if list contains the specified element */
-  function contains(o : Object) : boolean {
+  override function contains(o : Object) : boolean {
     var curr = _head
     print ("Checking if list contains " + o)
 
@@ -166,7 +170,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Returns true if this list contains all of the elements of the specified collection. */
-  function containsAll(c : Collection) : boolean {
+  override function containsAll(c : Collection) : boolean {
     // Check to see if all items are in the list
     for (item in c) {
         // Return false if we find one element not in the list
@@ -180,7 +184,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Returns the object at the specified index */
-  function get(index : int) : E {
+  override function get(index : int) : E {
     print ("Getting element at index " + index)
     var result : E = null
 
@@ -200,7 +204,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Returns the index of the first occurrence of the specified element, or -1 if it does not exist */
-  function indexOf(o : Object) : int {
+  override function indexOf(o : Object) : int {
     var curr = _head
     var currIndex = 0
     var resultIndex = -1
@@ -220,19 +224,19 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Returns true if list is empty (contains no elements) */
-  property get Empty() : boolean {
+  override property get Empty() : boolean {
     print ("Checking if list is empty: " + (_size == 0 && _head == null && _tail == null))
     return (_size == 0 && _head == null && _tail == null)
   }
 
   /* Returns an iterator over the elements in this list in proper sequence. */
-  function iterator() : Iterator<E> {
+  override function iterator() : Iterator<E> {
     var linkedListIterator = new LinkedListIterator()
     return linkedListIterator
   }
 
   /* Returns the index of the last occurrence of the specified element in this list, or -1 if this list does not contain the element. */
-  function lastIndexOf(o : Object) : int {
+  override function lastIndexOf(o : Object) : int {
     var curr = _tail
     var currIndex = _size - 1
     var resultIndex = -1
@@ -242,6 +246,7 @@ class LinkedList<E> implements List<E> {
     while (curr != null) {
       if (curr.Data == o) {
         resultIndex = currIndex
+        break
       }
       curr = curr.Prev
       currIndex--
@@ -252,13 +257,13 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Returns a list iterator over the elements in this list (in proper sequence). */
-  function listIterator() : ListIterator<E> {
+  override function listIterator() : ListIterator<E> {
     var linkedListIterator = new LinkedListIterator()
     return linkedListIterator
   }
 
   /* Returns a list iterator over the elements in this list (in proper sequence), starting at the specified position in the list. */
-  function listIterator(index : int) : ListIterator<E> {
+  override function listIterator(index : int) : ListIterator<E> {
     var start = _head
     var currIndex = 0
 
@@ -272,7 +277,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Removes the element at the specified position in this list. */
-  function remove(index : int) : E {
+  override function remove(index : int) : E {
     print ("Removing from index: " + index)
 
     var currIndex = 0
@@ -307,7 +312,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Removes first occurrence of element if it is present */
-  function remove(o : Object) : boolean {
+  override function remove(o : Object) : boolean {
     print ("Removing from list: " + o)
     var currSize = _size
 
@@ -342,7 +347,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Removes from this list all of its elements that are contained in the specified collection. */
-  function removeAll(c : Collection) : boolean {
+  override function removeAll(c : Collection) : boolean {
     var previousSize = _size
 
     for (item in c) {
@@ -354,7 +359,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Retains only the elements in this list that are contained in the specified collection. */
-  function retainAll(c : Collection) : boolean {
+  override function retainAll(c : Collection) : boolean {
     var curr = _head
     var previousSize = _size
 
@@ -368,7 +373,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Replaces the element at the specified position in this list with the specified element. */
-  function set(index : int, element : E) : E {
+  override function set(index : int, element : E) : E {
     var currIndex = 0
     var curr = _head
     var result : E
@@ -386,12 +391,12 @@ class LinkedList<E> implements List<E> {
   }
 
   /* size() - Returns the size of the list */
-  function size() : int {
+  override function size() : int {
     return _size
   }
 
   /* Returns a view of the portion of this list between the specified fromIndex, inclusive, and toIndex, exclusive. */
-  function subList(fromIndex : int, toIndex : int) : List<E> {
+  override function subList(fromIndex : int, toIndex : int) : List<E> {
     var result = new LinkedList<E>()
     var curr = _head
     var currIndex = 0
@@ -413,7 +418,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Returns an array containing all of the elements in this list in proper sequence (from first to last element). */
-  function toArray() : Object[] {
+  override function toArray() : Object[] {
     var resultArray = new Object[_size]
     var curr = _head
 
@@ -428,7 +433,7 @@ class LinkedList<E> implements List<E> {
 
   /* Returns an array containing all of the elements in this list in proper sequence (from first to last element);
   the runtime type of the returned array is that of the specified array. */
-  function toArray<T>(a : T[]) : T[] {
+  override function toArray<T>(a : T[]) : T[] {
     var resultArray = new T[_size]
     var curr = _head
 
@@ -453,7 +458,7 @@ class LinkedList<E> implements List<E> {
 
     while (curr != null) {
       if (curr.Next != null)
-        outputString += curr.Data + " --> "
+        outputString += curr.Data + " <--> "
       else
         outputString += curr.Data
 
@@ -464,7 +469,7 @@ class LinkedList<E> implements List<E> {
   }
 
   /* toString() - Returns a string of the current list in the format: [X,Y,Z] */
-  function toString() : String {
+  override function toString() : String {
     var curr = _head
     var outputString = "["
 
@@ -483,98 +488,87 @@ class LinkedList<E> implements List<E> {
   }
 
   /* Linked List Iterator */
-  class LinkedListIterator implements java.util.Iterator<E>, java.util.ListIterator<E> {
-    // TODO: Fix to support doubly linked list
+  class LinkedListIterator implements ListIterator<E> {
     var _curr : ListNode<E>
-    var _previous : ListNode<E>
+    var _lastElementReturned : ListNode<E>
     var currIndex : int
 
     construct() {
       _curr = _head
-      _previous = null
       currIndex = 0
     }
 
     construct(start : ListNode<E>, index : int) {
       _curr = start
-      _previous = getPreviousElement(_curr)
       currIndex = index
     }
 
     /* Inserts the specified element into the list. */
-    function add(e : E) {
+    override function add(e : E) {
       var newNode = new ListNode<E>(e)
-      if (this.hasPrevious()) {
-        _previous.Next = newNode
-      }
 
+      newNode.Prev = _curr.Prev
       newNode.Next = _curr
-      _previous = newNode
+
+      if (hasPrevious())
+        _curr.Prev.Next = newNode
+
+      _curr.Prev = newNode
+      _size++
     }
 
     /* Returns true if this list iterator has more elements when traversing the list in the forward direction. */
-    function hasNext() : boolean {
+    override function hasNext() : boolean {
        return (_curr != null)
     }
 
     /* Returns true if this list iterator has more elements when traversing the list in the reverse direction. */
-    function hasPrevious() : boolean {
-      return (_previous != null)
+    override function hasPrevious() : boolean {
+      return (_curr.Prev != null)
     }
 
     /* Returns the next element in the list and advances the cursor position. */
-    function next() : E {
+    override function next() : E {
       var result : E = null
 
       // Iterate forward
       if (hasNext()) {
        result = _curr.Data
-        _previous = _curr
+       _lastElementReturned = _curr
        _curr = _curr.Next
-        currIndex++
+       currIndex++
       }
 
       return result
     }
 
     /* Returns the index of the element that would be returned by a subsequent call to next(). */
-    function nextIndex() : int {
+    override function nextIndex() : int {
       return currIndex
     }
 
     /* Returns the previous element in the list and moves the cursor position backwards. */
-    function previous() : E {
+    override function previous() : E {
       // Store result value and update current pointer backwards
+      _curr = _curr.Prev
       var result = _curr.Data
-      _curr = _previous
       currIndex--
-      _previous = getPreviousElement(_curr)
 
       return result
     }
 
-    // Helper function: Get element before current node
-    function getPreviousElement(curr : ListNode<E>) : ListNode<E> {
-      var temp = _head
-      while (temp.Next != curr) {
-        temp = temp.Next
-      }
-
-      return temp
-    }
-
     /* Returns the index of the element that would be returned by a subsequent call to previous(). */
-    function previousIndex() : int {
+    override function previousIndex() : int {
       return currIndex - 1
     }
 
     /* Removes from the list the last element that was returned by next() or previous(). */
-    function remove() {
+    override function remove() {
       // TODO
     }
 
     /* Replaces the last element returned by next() or previous() with the specified element. */
-    function set(e : E) {
+    override function set(e : E) {
       // TODO
     }
 
