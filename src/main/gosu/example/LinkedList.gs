@@ -7,7 +7,7 @@ uses java.util.List
  * Linked List implementation of java.util.List interface.
  * Created by barelampagos on 12/24/16.
  */
-class LinkedList<E> implements java.util.List<E> {
+class LinkedList<E> implements List<E> {
   var _head : ListNode<E>
   var _tail : ListNode<E>
   var _size : int
@@ -21,6 +21,7 @@ class LinkedList<E> implements java.util.List<E> {
   /* Appends specified element to the end of the list */
   function add(e : E) : boolean {
     print("Inserting " + e + ".")
+    var currSize = _size
     var newNode = new ListNode<E>(e)
 
     if (_head == null && _tail == null) {
@@ -32,7 +33,7 @@ class LinkedList<E> implements java.util.List<E> {
       _tail = newNode
     }
     _size++
-    return true
+    return (currSize != _size)
   }
 
   /* Appends specified element to the specified index in the list */
@@ -81,7 +82,6 @@ class LinkedList<E> implements java.util.List<E> {
 
   /* Inserts all of the elements in the specified collection into this list at the specified position. */
   function addAll(index : int, c : Collection<E>) : boolean {
-    // TODO: Sanity check - fix pointers for doubly linked
     var currSize = _size
     var currIndex = 0
     var curr = _head
@@ -102,6 +102,7 @@ class LinkedList<E> implements java.util.List<E> {
           newNode.Prev = tempCurr
           tempCurr = newNode
         }
+        _size++
       }
 
       // Connect the new list to original list + update new head
@@ -110,7 +111,7 @@ class LinkedList<E> implements java.util.List<E> {
       _head = tempHead
     } else {
       // Navigate to index - 1
-      while (currIndex < index) {
+      while (currIndex < index - 1) {
         curr = curr.Next
         currIndex++
       }
@@ -123,11 +124,14 @@ class LinkedList<E> implements java.util.List<E> {
       for (item in c) {
         var newNode = new ListNode<E>(item)
         curr.Next = newNode
+        newNode.Prev = curr
         curr = newNode
+        _size++
       }
 
       // Connect new list to remaining list elements
       curr.Next = next
+      next.Prev = curr
     }
 
     return (currSize != _size)
@@ -278,6 +282,12 @@ class LinkedList<E> implements java.util.List<E> {
     if (index == 0) {
       _head = _head.Next
       _head.Prev = null
+    } else if (index == _size - 1) {
+      curr = _tail
+      _tail = _tail.Prev
+      curr.Prev = null
+      _tail.Next = null
+
     } else {
 
       // Iterate to proper index
@@ -285,8 +295,6 @@ class LinkedList<E> implements java.util.List<E> {
         curr = curr.Next
         currIndex++
       }
-
-      // TODO: Handle edge case - removing last elem (index == size - 1)
 
       // Update pointers
       curr.Prev.Next = curr.Next
@@ -301,32 +309,36 @@ class LinkedList<E> implements java.util.List<E> {
   /* Removes first occurrence of element if it is present */
   function remove(o : Object) : boolean {
     print ("Removing from list: " + o)
+    var currSize = _size
 
     if (this.contains(o)) {
       if (_head.Data == o) {
         _head = _head.Next
         _head.Prev = null
         _size--
-        return true
       } else {
-
         var curr = _head
 
         while (curr.Data != o) {
           curr = curr.Next
         }
 
-        // TODO: Handle edge case - removing last elem (index == size - 1)
-
-        curr.Prev.Next = curr.Next
-        curr.Next.Prev = curr.Prev
-        curr.Prev = null
-        curr.Next = null
+        // Removing last elem
+        if (curr == _tail) {
+          _tail = _tail.Prev
+          curr.Prev = null
+          _tail.Next = null
+        } else {
+          curr.Prev.Next = curr.Next
+          curr.Next.Prev = curr.Prev
+          curr.Prev = null
+          curr.Next = null
+        }
         _size--
       }
     }
 
-    return false
+    return currSize != _size
   }
 
   /* Removes from this list all of its elements that are contained in the specified collection. */
