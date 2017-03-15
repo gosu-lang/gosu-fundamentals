@@ -1,6 +1,5 @@
 package binaryTrees
 
-uses list.*
 uses org.junit.Assert
 uses org.junit.Test
 
